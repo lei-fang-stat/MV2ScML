@@ -1,6 +1,6 @@
 MV2ScML
 
-The goal of MV2ScML is to perform the multivariate Two-stage Constrained Maximum Likelihood (2ScML) method. You can install it using the following command:
+The goal of MV2ScML is to perform the Multivariate Two-stage Constrained Maximum Likelihood (MV-2ScML) method. You can install it using the following command:
 
 devtools::install_github("lei-fang-stat/MV2ScML")
 

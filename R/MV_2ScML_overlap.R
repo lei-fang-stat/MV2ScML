@@ -37,7 +37,7 @@ library(kernlab)
 MV.2ScML.overlap.part1=function(n1,n2,n3,num.protein, num.snp,gamma.hat,
                             gamma.hat.mat,cor.Z.sample2.3,SNP,SNP.comb,
                             outcome.GWAS.i,outcome.GWAS.comb,
-                            K.vec,Est.Cov.D,
+                            K.vec,
                             snp.set.provide,
                             num.exposure){
   Est.Cov.DY = rep(0,length(c(1:num.protein)))

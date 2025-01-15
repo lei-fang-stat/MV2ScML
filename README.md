@@ -8,6 +8,3 @@ We also need to install the following R package:
 
 lasso2: This package is not available on CRAN for R 4.2.2, it is availale on GitHub at https://github.com/cran/lasso2.
 The Stage 1 fitted models for UKB-PPP are available on https://www.synapse.org/Synapse:syn64041817 
-```{sh}
-s
-```

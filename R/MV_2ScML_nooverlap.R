@@ -21,11 +21,32 @@ library(kernlab)
 ##the naive standard error with considering stage 1 variability
 ##the exposures included in the analysis
 ##the invalid IVs identified
-MV.2ScML.nooverlap=function(n1,n3,num.protein, num.snp,gamma.hat,
-                            cor.Z.sample3,SNP,SNP.comb,outcome.GWAS.i,outcome.GWAS.comb,
+MV.2ScML.nooverlap=function(n1,n3,num.snp,exposure.GWAS.list,
+                            cor.Z.sample3,SNP,SNP.comb,outcome.GWAS.comb,
                             K.vec,Est.Cov.D,snp.set.provide){
+
+  num.protein=length(exposure.GWAS.list)
   n2=0 # the number of overlapping samples
-  Est.Cov.DY = rep(0,length(c(1:num.protein)))
+
+outcome.GWAS.i=list()
+for (j in 1:num.protein){
+outcome.GWAS.i[[j]]= outcome.GWAS.comb[match(exposure.GWAS.list[[j]]$SNP,outcome.GWAS.comb$MarkerName),]
+}	
+ gamma.hat=list()
+ cor.DZ.original=list()
+  for (j in 1:num.protein){
+        cor.DZ.original[[j]]=exposure.GWAS.list[[j]]$Beta/sqrt((exposure.GWAS.list[[j]]$Beta)^2+(n1-2)*(exposure.GWAS.list$SE)^2)  
+   }
+
+ cor.Z.ref.original=list()
+     for (j in 1:num.protein){
+      cor.Z.ref.original[[j]]=cor.Z.sample3[exposure.GWAS.list[[j]]$SNP,exposure.GWAS.list[[j]]$SNP]
+}
+ for ( j in 1:num.protein){
+        gamma.hat[[j]]= solve(cor.Z.ref.original[[j]])%*%cor.DZ.original[[j]]
+ }
+   
+ 
   gamma.hat.ind=list()
   gamma.hat.trans=list()
   for ( j in 1:num.protein){
@@ -35,7 +56,7 @@ MV.2ScML.nooverlap=function(n1,n3,num.protein, num.snp,gamma.hat,
   }
   gamma.hat.mat=do.call(cbind, gamma.hat.trans) #make gamma.hat into a matrix form
 
-
+ Est.Cov.DY = rep(0,length(c(1:num.protein)))
 	##combined snps
 
       	cor.DjDk.matrix=function(x,y){

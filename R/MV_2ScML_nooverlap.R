@@ -21,7 +21,7 @@ library(kernlab)
 ##the naive standard error with considering stage 1 variability
 ##the exposures included in the analysis
 ##the invalid IVs identified
-MV.2ScML.nooverlap=function(n1,n3,exposure.GWAS.list,
+MV.2ScML=function(n1,n3,exposure.GWAS.list,
                             cor.Z,outcome.GWAS.comb,exposure.GWAS.NULL.list,
                             K.vec,snp.set.provide=NULL){
   num.protein=length(exposure.GWAS.list)

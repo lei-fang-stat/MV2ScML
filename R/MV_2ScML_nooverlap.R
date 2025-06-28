@@ -5,7 +5,7 @@ library(kernlab)
 #num.protein number of exposures
 #num.snp number of unique IVs for all exposures
 #gamma.hat stage 1 of weights into list
-#cor.Z.sample3 correlation matrix of in-sample LD for stage 2 or from reference panel with colnames of SNPs id.
+#cor.Z correlation matrix of in-sample LD for stage 2 or from reference panel with colnames of SNPs id.
 #SNP list of IV names
 #SNP.comb unique of the combined IV names
 #outcome.GWAS.i is the stage2 GWAS statistics for each exposure
@@ -21,30 +21,31 @@ library(kernlab)
 ##the naive standard error with considering stage 1 variability
 ##the exposures included in the analysis
 ##the invalid IVs identified
-MV.2ScML.nooverlap=function(n1,n3,num.snp,exposure.GWAS.list,
-                            cor.Z.sample3,SNP,SNP.comb,outcome.GWAS.comb,
-                            K.vec,Est.Cov.D,snp.set.provide){
-
+MV.2ScML.nooverlap=function(n1,n3,exposure.GWAS.list,
+                            cor.Z,outcome.GWAS.comb,exposure.GWAS.NULL.list,
+                            K.vec,snp.set.provide=NULL){
   num.protein=length(exposure.GWAS.list)
   n2=0 # the number of overlapping samples
+  num.snp=nrow(outcome.GWAS.comb)
+  outcome.GWAS.i=list()
+  for (j in 1:num.protein){
+     outcome.GWAS.i[[j]]= outcome.GWAS.comb[match(exposure.GWAS.list[[j]]$SNP,outcome.GWAS.comb$SNP),]
+  }
 
-outcome.GWAS.i=list()
-for (j in 1:num.protein){
-outcome.GWAS.i[[j]]= outcome.GWAS.comb[match(exposure.GWAS.list[[j]]$SNP,outcome.GWAS.comb$MarkerName),]
-}	
- gamma.hat=list()
- cor.DZ.original=list()
+###calculate stage 1 weights	
+  gamma.hat=list()
+  cor.DZ.original=list()
   for (j in 1:num.protein){
         cor.DZ.original[[j]]=exposure.GWAS.list[[j]]$Beta/sqrt((exposure.GWAS.list[[j]]$Beta)^2+(n1-2)*(exposure.GWAS.list$SE)^2)  
-   }
+  }
 
- cor.Z.ref.original=list()
+  cor.Z.ref.original=list()
      for (j in 1:num.protein){
-      cor.Z.ref.original[[j]]=cor.Z.sample3[exposure.GWAS.list[[j]]$SNP,exposure.GWAS.list[[j]]$SNP]
-}
- for ( j in 1:num.protein){
+      cor.Z.ref.original[[j]]=cor.Z[exposure.GWAS.list[[j]]$SNP,exposure.GWAS.list[[j]]$SNP]
+    }
+     for ( j in 1:num.protein){
         gamma.hat[[j]]= solve(cor.Z.ref.original[[j]])%*%cor.DZ.original[[j]]
- }
+    }
    
  
   gamma.hat.ind=list()
@@ -56,11 +57,32 @@ outcome.GWAS.i[[j]]= outcome.GWAS.comb[match(exposure.GWAS.list[[j]]$SNP,outcome
   }
   gamma.hat.mat=do.call(cbind, gamma.hat.trans) #make gamma.hat into a matrix form
 
- Est.Cov.DY = rep(0,length(c(1:num.protein)))
-	##combined snps
+###estimate the covariance of stage 1 residuals	
+cor.Z.sample1=list()
+for (j in 1:num.protein){
+ cor.Z.sample1[[j]]=cor.Z(exposure.GWAS.NULL.list[[j]]$SNP,exposure.GWAS.NULL.list[[j]]$SNP)
+}
 
+
+
+ cor.Z.null.Z1=list()
+	for (j in 1:num.protein){
+	cor.Z.null.Z1[[j]]=matrix(NA,nrow=ncol(exposure.GWAS.NULL.list[[j]]),ncol=ncol(exposure.GWAS.list[[j]]))
+	for ( i in 1:nrow(cor.Z.null.Z1[[j]])){
+	cor.Z.null.Z1[[j]][i,]=cor.Z(exposure.GWAS.NULL.list[[j]]$SNP[i],exposure.GWAS.list[[j]]$SNP)
+	}
+	}	
+ Est.Cov.D=Est.Cov.D.fun(n1,num.protein, cor.Z.null.Z1,
+                   cor.Z.sample1, cor.Z.null1,
+                   exposure.GWAS.NULL.list,gamma.hat)
+
+####
+	
+ Est.Cov.DY = rep(0,length(c(1:num.protein)))
+	
+#### calculate the covaraince between predicted exposures
       	cor.DjDk.matrix=function(x,y){
-         	return(gamma.hat[[x]]%*%cor.Z.sample3[SNP[[x]], SNP[[y]]]%*%gamma.hat[[y]])
+         	return(gamma.hat[[x]]%*%cor.Z[SNP[[x]], SNP[[y]]]%*%gamma.hat[[y]])
       	}
       	class(cor.DjDk.matrix)="kernel"
 
@@ -69,13 +91,13 @@ outcome.GWAS.i[[j]]= outcome.GWAS.comb[match(exposure.GWAS.list[[j]]$SNP,outcome
 
       	vec.DjhatZ.list=list()
       	for (j in 1:num.protein){
-       	vec.DjhatZ.list[[j]]=as.numeric(gamma.hat[[j]]%*% cor.Z.sample3[SNP[[j]], SNP.comb])
+       	vec.DjhatZ.list[[j]]=as.numeric(gamma.hat[[j]]%*% cor.Z[SNP[[j]], SNP.comb])
       	}
      	#get design matrix
       	A11= DjhatDkhat
       	A12= do.call(rbind,vec.DjhatZ.list)
       	A21=t(A12)
-      	A22=cor.Z.sample3[SNP.comb,SNP.comb]
+      	A22=cor.Z[SNP.comb,SNP.comb]
       	Cov.Design = rbind(cbind(A11,A12),cbind(A21,A22))
 
       	Cov.Design= Cov.Design + diag( dim(Cov.Design)[2] )*posdef # num.gene + num.snp
@@ -140,7 +162,7 @@ outcome.GWAS.i[[j]]= outcome.GWAS.comb[match(exposure.GWAS.list[[j]]$SNP,outcome
       		vec.DjhatZ.BIC.list=list()
         	#recalculate the design matrix
       		for (j in 1:num.protein){
-       		vec.DjhatZ.BIC.list[[j]]=as.numeric(gamma.hat[[j]]%*% cor.Z.sample3[SNP[[j]], SNP.BIC])
+       		vec.DjhatZ.BIC.list[[j]]=as.numeric(gamma.hat[[j]]%*% cor.Z[SNP[[j]], SNP.BIC])
       		}
 
       		A12.BIC= do.call(rbind, vec.DjhatZ.BIC.list)
@@ -148,7 +170,7 @@ outcome.GWAS.i[[j]]= outcome.GWAS.comb[match(exposure.GWAS.list[[j]]$SNP,outcome
       		if (length(snp.set)==1){
       		A22.BIC=1
       		}else{
-      			A22.BIC=cor.Z.sample3[SNP.BIC,SNP.BIC]
+      			A22.BIC=cor.Z[SNP.BIC,SNP.BIC]
       		}
       		Cov.Design.BIC = rbind(cbind(A11,A12.BIC),cbind(A21.BIC,A22.BIC))
 
@@ -158,7 +180,7 @@ outcome.GWAS.i[[j]]= outcome.GWAS.comb[match(exposure.GWAS.list[[j]]$SNP,outcome
   	}
 
   	BetaAlpha.hat = solve(Cov.Design.BIC)%*%cov_DesignX_sim.Y.BIC
-  	BetaAlpha.hat
+  	names(BetaAlpha.hat)[1:num.protein]=paste("exposure",1:num.protein,sep="")
 
   	BetaHat = BetaAlpha.hat[1:length(protein.set),]
 
@@ -166,7 +188,7 @@ outcome.GWAS.i[[j]]= outcome.GWAS.comb[match(exposure.GWAS.list[[j]]$SNP,outcome
 
 	### estimates of variance component
 	gamma.hat.mat= gamma.hat.mat
-	Est.Cov.Z = cor.Z.sample3[SNP.comb, SNP.comb]
+	Est.Cov.Z = cor.Z[SNP.comb, SNP.comb]
 	Est.Cov.D= Est.Cov.D
   	Est.Cov = rbind(cbind(Est.Cov.D,Est.Cov.DY),
                   c(Est.Cov.DY,0))

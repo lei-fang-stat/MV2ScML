@@ -185,7 +185,7 @@ for (j in 1:num.protein){
   	}
 
   	BetaAlpha.hat = solve(Cov.Design.BIC)%*%cov_DesignX_sim.Y.BIC
-  	names(BetaAlpha.hat)[1:num.protein]=paste("exposure",1:num.protein,sep="")
+  	row.names(BetaAlpha.hat)[1:num.protein]=c(paste("exposure",1:num.protein,sep=""))
 
   	BetaHat = BetaAlpha.hat[1:length(protein.set),]
 
@@ -293,10 +293,10 @@ for (j in 1:num.protein){
                        t(BetaAlpha.hat)%*% Cov.Design.BIC%*% BetaAlpha.hat)
 	Sd = sqrt(diag(Final.Est.Cov)/(n2+n3))
         pval.exposure=2*(1-pnorm(abs(BetaAlpha.hat[1:num.protein]/Sd[1:num.protein]),0,1))
-    	result=list(Est = BetaAlpha.hat,
-              Sd, #Sd.naive1 =sqrt(delta*diag(solve(Cov.Design.BIC))/n3),
-	      pval.exposure,#protein.set = protein.set,
-	      snp.set = snp.set
+    	result=list(Estimate = BetaAlpha.hat,
+              Standard.error=Sd, #Sd.naive1 =sqrt(delta*diag(solve(Cov.Design.BIC))/n3),
+	      pval.exposure=pval.exposure #protein.set = protein.set,
+	      # invalid.IV = snp.set
               )
 
 	return(result)

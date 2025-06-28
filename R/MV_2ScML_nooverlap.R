@@ -27,11 +27,16 @@ MV.2ScML.nooverlap=function(n1,n3,exposure.GWAS.list,
   num.protein=length(exposure.GWAS.list)
   n2=0 # the number of overlapping samples
   num.snp=nrow(outcome.GWAS.comb)
+  SNP=list()
+  for (j in 1:num.protein){
+  SNP[[j]]= exposure.GWAS.list[[j]]$SNP
+  }
+  SNP.comb=outcome.GWAS.comb$SNP
   outcome.GWAS.i=list()
   for (j in 1:num.protein){
      outcome.GWAS.i[[j]]= outcome.GWAS.comb[match(exposure.GWAS.list[[j]]$SNP,outcome.GWAS.comb$SNP),]
   }
-
+ 
 ###calculate stage 1 weights	
   gamma.hat=list()
   cor.DZ.original=list()

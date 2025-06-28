@@ -49,7 +49,7 @@ outcome.GWAS.comb
    snp_45 -0.0026410088 0.006324786 -0.41756491  6.762688e-01
    snp_46 -0.0040127625 0.006324757 -0.63445319  5.257909e-01
 ```
-We first need the list of GWAS summary statistics for each exposure for NULL SNPs(selected based on large p-values for all exposures). We need this to compute the variance component between each exposure.
+We also need the list of GWAS summary statistics for each exposure for NULL SNPs(selected based on large p-values for all exposures). We need this to compute the variance component between each exposure.
 ```
 exposure.GWAS.NULL.list[[1]]
 ##GWAS summary statistics for exposure 1 with shared NULL SNPs (no association with all exposures)

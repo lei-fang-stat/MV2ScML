@@ -4,7 +4,6 @@ library(kernlab)
 #n3 sample size of stage 2
 #num.protein number of exposures
 #num.snp number of unique IVs for all exposures
-#protein.clump GWAS summary statistics
 #gamma.hat stage 1 of weights into list
 #cor.Z.sample3 correlation matrix of in-sample LD for stage 2 or from reference panel with colnames of SNPs id.
 #exposure.of.interest a set of interested exposured included for multivariate analysis

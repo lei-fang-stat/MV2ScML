@@ -11,9 +11,7 @@ devtools::install_github("lei-fang-stat/MV2ScML")
 ## Load R packages
 We also need to install the following R package:
 
-- **MASS**: This package is available on CRAN. We use `MASS::mvrnorm()`
-  function to generate random variables.
-- **kernlab**: This package is to get kernel matrix calculation  
+- **kernlab**: This package is to get kernel matrix type of calculation  
   
 - **lasso2**: This package is not available on CRAN for R 4.2.2, it is available on GitHub at https://github.com/cran/lasso2.
 

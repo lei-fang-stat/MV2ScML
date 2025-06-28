@@ -12,8 +12,8 @@ Est.Cov.D.fun=function(n1,num.protein, cor.Z.null.Z1,
  sigma_jk.matrix=function(j,k){
       return(sigma_jk_fun(n1=n1,cor.Z.null.Z1= cor.Z.null.Z1[[j]], cor.Z.null.Z2= cor.Z.null.Z1[[k]],
                       cor.Z1=cor.Z.sample1[[j]], cor.Z2=cor.Z.sample1[[k]],
-                      cor.Z.null= cor.Z.null1,protein.clump1.null=protein.clump.null1[[j]],
-                      protein.clump2.null=protein.clump.null1[[k]],gamma_hat1= gamma.hat[[j]],gamma_hat2= gamma.hat[[k]]))
+                      cor.Z.null= cor.Z.null1,protein.clump1.null=exposure.GWAS.NULL.list[[j]],
+                      protein.clump2.null=exposure.GWAS.NULL.list[[k]],gamma_hat1= gamma.hat[[j]],gamma_hat2= gamma.hat[[k]]))
 }
  class(sigma_jk.matrix)="kernel"
 

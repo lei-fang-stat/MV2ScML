@@ -65,16 +65,16 @@ MV.2ScML.nooverlap=function(n1,n3,exposure.GWAS.list,
 ###estimate the covariance of stage 1 residuals	
 cor.Z.sample1=list()
 for (j in 1:num.protein){
- cor.Z.sample1[[j]]=cor.Z(exposure.GWAS.NULL.list[[j]]$SNP,exposure.GWAS.NULL.list[[j]]$SNP)
+ cor.Z.sample1[[j]]=cor.Z[exposure.GWAS.list[[j]]$SNP,exposure.GWAS.list[[j]]$SNP]
 }
 
 
 
  cor.Z.null.Z1=list()
 	for (j in 1:num.protein){
-	cor.Z.null.Z1[[j]]=matrix(NA,nrow=ncol(exposure.GWAS.NULL.list[[j]]),ncol=ncol(exposure.GWAS.list[[j]]))
+	cor.Z.null.Z1[[j]]=matrix(NA,nrow=nrow(exposure.GWAS.NULL.list[[j]]),ncol=nrow(exposure.GWAS.list[[j]]))
 	for ( i in 1:nrow(cor.Z.null.Z1[[j]])){
-	cor.Z.null.Z1[[j]][i,]=cor.Z(exposure.GWAS.NULL.list[[j]]$SNP[i],exposure.GWAS.list[[j]]$SNP)
+	cor.Z.null.Z1[[j]][i,]=cor.Z[exposure.GWAS.NULL.list[[j]]$SNP[i],exposure.GWAS.list[[j]]$SNP]
 	}
 	}	
  Est.Cov.D=Est.Cov.D.fun(n1,num.protein, cor.Z.null.Z1,

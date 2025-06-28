@@ -5,7 +5,7 @@ library(kernlab)
 ##cor.Z.sample1         the list of correlation for the IVs used for each exposure
 ##cor.Z.null1           the correlation of null snps
 ##gamma.hat             stage 1 of weights into list
-##exposure.GWAS.NULL.list   the GWAS result for each null snps with "beta.exposure","se.exposure","z.exposure","pval"
+##exposure.GWAS.NULL.list   the GWAS result for each null snps with "Beta","SE","Z_STAT","pval"
 Est.Cov.D.fun=function(n1,num.protein, cor.Z.null.Z1,
                    cor.Z.sample1, cor.Z.null1,
                    exposure.GWAS.NULL.list,gamma.hat){

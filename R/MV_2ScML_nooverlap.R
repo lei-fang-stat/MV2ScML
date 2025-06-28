@@ -36,7 +36,7 @@ MV.2ScML.nooverlap=function(n1,n3,exposure.GWAS.list,
   gamma.hat=list()
   cor.DZ.original=list()
   for (j in 1:num.protein){
-        cor.DZ.original[[j]]=exposure.GWAS.list[[j]]$Beta/sqrt((exposure.GWAS.list[[j]]$Beta)^2+(n1-2)*(exposure.GWAS.list$SE)^2)  
+        cor.DZ.original[[j]]=exposure.GWAS.list[[j]]$Beta/sqrt((exposure.GWAS.list[[j]]$Beta)^2+(n1-2)*(exposure.GWAS.list[[j]]$SE)^2)  
   }
 
   cor.Z.ref.original=list()

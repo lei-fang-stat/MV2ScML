@@ -8,7 +8,7 @@ library(kernlab)
 ##exposure.GWAS.NULL.list   the GWAS result for each null snps with "beta.exposure","se.exposure","z.exposure","pval"
 Est.Cov.D.fun=function(n1,num.protein, cor.Z.null.Z1,
                    cor.Z.sample1, cor.Z.null1,
-                   protein.clump.null1,gamma.hat){
+                   exposure.GWAS.NULL.list,gamma.hat){
  sigma_jk.matrix=function(j,k){
       return(sigma_jk_fun(n1=n1,cor.Z.null.Z1= cor.Z.null.Z1[[j]], cor.Z.null.Z2= cor.Z.null.Z1[[k]],
                       cor.Z1=cor.Z.sample1[[j]], cor.Z2=cor.Z.sample1[[k]],

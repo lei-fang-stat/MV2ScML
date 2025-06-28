@@ -87,7 +87,7 @@ for (j in 1:num.protein){
 	
 #### calculate the covaraince between predicted exposures
       	cor.DjDk.matrix=function(x,y){
-         	return(gamma.hat[[x]]%*%cor.Z[SNP[[x]], SNP[[y]]]%*%gamma.hat[[y]])
+         	return(t(gamma.hat[[x]])%*%cor.Z[SNP[[x]], SNP[[y]]]%*%gamma.hat[[y]])
       	}
       	class(cor.DjDk.matrix)="kernel"
 
@@ -96,7 +96,7 @@ for (j in 1:num.protein){
 
       	vec.DjhatZ.list=list()
       	for (j in 1:num.protein){
-       	vec.DjhatZ.list[[j]]=as.numeric(gamma.hat[[j]]%*% cor.Z[SNP[[j]], SNP.comb])
+       	vec.DjhatZ.list[[j]]=as.numeric(t(gamma.hat[[j]])%*% cor.Z[SNP[[j]], SNP.comb])
       	}
      	#get design matrix
       	A11= DjhatDkhat
@@ -167,7 +167,7 @@ for (j in 1:num.protein){
       		vec.DjhatZ.BIC.list=list()
         	#recalculate the design matrix
       		for (j in 1:num.protein){
-       		vec.DjhatZ.BIC.list[[j]]=as.numeric(gamma.hat[[j]]%*% cor.Z[SNP[[j]], SNP.BIC])
+       		vec.DjhatZ.BIC.list[[j]]=as.numeric(t(gamma.hat[[j]])%*% cor.Z[SNP[[j]], SNP.BIC])
       		}
 
       		A12.BIC= do.call(rbind, vec.DjhatZ.BIC.list)
@@ -291,9 +291,10 @@ for (j in 1:num.protein){
 
    	delta=as.numeric(1- 2*sum(cov_DesignX_sim.Y.BIC* BetaAlpha.hat) +
                        t(BetaAlpha.hat)%*% Cov.Design.BIC%*% BetaAlpha.hat)
+	Sd = sqrt(diag(Final.Est.Cov)/(n2+n3))
         pval.exposure=2*(1-pnorm(abs(BetaAlpha.hat[1:num.protein]/Sd[1:num.protein]),0,1))
     	result=list(Est = BetaAlpha.hat,
-              Sd = sqrt(diag(Final.Est.Cov)/(n2+n3)), #Sd.naive1 =sqrt(delta*diag(solve(Cov.Design.BIC))/n3),
+              Sd, #Sd.naive1 =sqrt(delta*diag(solve(Cov.Design.BIC))/n3),
 	      pval.exposure,#protein.set = protein.set,
 	      snp.set = snp.set
               )

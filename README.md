@@ -139,4 +139,4 @@ Lei Fang, Haoran Xue, Zhaotong Lin, Wei Pan,
 Multivariate proteome-wide association study to identify causal proteins for Alzheimer disease,
 The American Journal of Human Genetics,
 https://doi.org/10.1016/j.ajhg.2024.12.010.
-The Stage 1 fitted models for UKB-PPP in the paper are available on https://www.synapse.org/Synapse:syn64041817 
+The Stage 1 fitted models for UKB-PPP in the paper are available on https://www.synapse.org/Synapse:syn64041817.

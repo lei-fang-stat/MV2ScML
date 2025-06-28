@@ -69,24 +69,20 @@ parameter input for run the two sample version of MV2ScML
 ```
 #n1 sample: size of stage 1
 #n3 sample: size of stage 2
-#num.protein: number of exposures
 #num.snp: number of unique SNPs(IVs) for all exposures
 #exposure.GWAS.list: list of GWAS result for exposures with preselected IVs for each exposure.
 #exposure.GWAS.NULL.list: list of GWAS result for exposures with NULL SNPs for each exposure.
 #cor.Z: correlation matrix of in-sample LD for stage 2 or from reference panel with colnames of SNPs id.
-#SNP: list of IV names for each exposure
-#SNP.comb: unique of the combined IV names
-#outcome.GWAS.i is the stage2 GWAS statistics for each exposure
 #outcome.GWAS.comb is the stage2 GWAS statistics for all IVs 
-#K.vec the tunning parameter for BIC selection, default is 0:(num.snp-2)
-#res.D residual for each exposure
-
+#K.vec range of number of invalid IVs for BIC selection, default is 0:(num.snp-2)
 #snp.set.provide the invalid IVs, default is NULL unless user specified
 
-MV.2ScML.nooverlap(n1,n3,num.snp,exposure.GWAS.list,
-                            cor.Z.sample3,
-                            outcome.GWAS.comb,
-                            K.vec,Est.Cov.D,snp.set.provide)
+MV.2ScML.nooverlap(n1,n3,num.snp,
+                   exposure.GWAS.list,
+                   exposure.GWAS.NULL.list,
+                   cor.Z,
+                   outcome.GWAS.comb,
+                   K.vec)
 ```
 
 The Stage 1 fitted models for UKB-PPP are available on https://www.synapse.org/Synapse:syn64041817 

@@ -6,7 +6,6 @@ library(kernlab)
 #num.snp number of unique IVs for all exposures
 #gamma.hat stage 1 of weights into list
 #cor.Z.sample3 correlation matrix of in-sample LD for stage 2 or from reference panel with colnames of SNPs id.
-#exposure.of.interest a set of interested exposured included for multivariate analysis
 #SNP list of IV names
 #SNP.comb unique of the combined IV names
 #outcome.GWAS.i is the stage2 GWAS statistics for each exposure

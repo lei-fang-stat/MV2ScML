@@ -47,7 +47,7 @@ outcome.GWAS.comb
    snp_45 -0.0026410088 0.006324786 -0.41756491  6.762688e-01
    snp_46 -0.0040127625 0.006324757 -0.63445319  5.257909e-01
 ```
-We also need the list of GWAS summary statistics for each exposure for NULL SNPs(selected based on large p-values for all exposures). We need this to compute the variance component between each exposure.
+We also need the list of GWAS summary statistics for each exposure for NULL SNPs(selected based on large p-values for all exposures). This is to compute the variance component between each exposure. In the example below, we used 500 NULL SNPs.
 ```
 exposure.GWAS.NULL.list[[1]]
 ##GWAS summary statistics for exposure 1 with shared NULL SNPs (no association with all exposures)
@@ -80,11 +80,11 @@ snp_10  0.011202148  0.0135503486 -0.003665583 -0.024114023  0.019604671
 ```
 #n1: sample size of stage 1
 #n3: sample size of stage 2
-#exposure.GWAS.list: list of GWAS results for exposures with preselected IVs for each exposure.
+#exposure.GWAS.list: list of GWAS results for exposures with preselected IVs (SNPs) for each exposure.
 #exposure.GWAS.NULL.list: list of GWAS results for exposures with NULL SNPs for each exposure.
 #outcome.GWAS.comb: the stage2 GWAS statistics for all IVs (excluding NULL SNPs)
 #cor.Z: correlation matrix of in-sample LD for stage 2 or from reference panel with colnames of SNPs id.
-#K.vec: range of number of invalid IVs for BIC selection, default is 0:(num.snp-2)
+#K.vec: range of number of invalid IVs for BIC selection, typical setting is 0:p-2, where p is the total number of IVs (excluding NULL SNPs)
 
 
 MV.2ScML(n1,n3,exposure.GWAS.list,

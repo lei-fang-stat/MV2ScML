@@ -16,7 +16,7 @@ We also need to install the following R package:
 - **lasso2**: This package is not available on CRAN for R 4.2.2, it is available on GitHub at https://github.com/cran/lasso2.
 
 ## Prepare the input 
-We first need the harmonized GWAS summary statistics for multiple exposures and the outcome. We also need the LD matrix for all the SNPs selected among all exposures and selected NULL SNPs for each exposure.
+We need the harmonized GWAS summary statistics for multiple exposures and the outcome, and an LD matrix, e.g., from a reference panel.
 
 We first need the list of GWAS summary statistics for each exposure for some preselected SNPs as IVs, as shown below. In terms of format, we require the input colnames to match "SNP", "Beta", and "SE". 
 ```

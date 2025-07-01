@@ -1,5 +1,6 @@
 [![release](https://img.shields.io/github/v/release/lei-fang-stat/MV2ScML)]()
-[![downloads](https://img.shields.io/github/downloads/lei-fang-stat/MV2ScML/total.svg?kill_cache=1&color=red)]()
+###[![downloads](https://img.shields.io/github/downloads/lei-fang-stat/MV2ScML/total.svg?kill_cache=1&color=red)]()
+![GitHub All Releases](https://img.shields.io/github/downloads/lei-fang-stat/MV2ScML/total)
 
 
 # MV2ScML

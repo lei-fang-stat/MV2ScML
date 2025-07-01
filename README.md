@@ -1,4 +1,5 @@
 [![downloads](https://img.shields.io/github/downloads/lei-fang-stat/MV2ScML/total.svg?kill_cache=1&color=red)]()
+[![release](https://img.shields.io/github/v/release/ID/REPO)]()
 
 # MV2ScML
 
@@ -24,6 +25,7 @@ We first need the list of GWAS summary statistics for each exposure for some pre
 ```
 exposure.GWAS.list[[1]]
 ##GWAS summary statistics for exposure 1 with selected SNPs as IVs
+
       SNP   Beta          SE           Z_STAT         pval
    snp_1    0.05156978  0.01412614   3.650662 2.642384e-04
    snp_2    0.09877343  0.01407580   7.017254 2.564895e-12
@@ -40,6 +42,7 @@ We then need the GWAS summary statistics for the outcome, combining all the sele
 ```
 outcome.GWAS.comb
 ##GWAS summary statistics for the outcome
+
    SNP     Beta          SE         Z_STAT        pval
    snp_1  0.1197827052 0.006279271 19.07589497  1.497420e-80
    snp_2  0.1361674495 0.006265898 21.73151385  9.439951e-104
@@ -53,6 +56,7 @@ We also need the list of GWAS summary statistics for each exposure for NULL SNPs
 ```
 exposure.GWAS.NULL.list[[1]]
 ##GWAS summary statistics for exposure 1 with shared NULL SNPs (no association with all exposures)
+
         SNP       Beta          SE           Z_STAT         pval
      snp_NULL1 -6.370629e-03  0.01414468 -4.503905e-01 0.6524484093
      snp_NULL2  4.952169e-03  0.01414479  3.501055e-01 0.7262742980

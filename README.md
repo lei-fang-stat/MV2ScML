@@ -1,3 +1,5 @@
+[![downloads](https://img.shields.io/github/downloads/lei-fang-stat/MV2ScML/total.svg?kill_cache=1&color=red)]()
+
 # MV2ScML
 
 MV2ScML is designed to perform the *Multivariate Two-stage Constrained Maximum Likelihood (MV-2ScML)* method to conduct the causal inference for multiple exposures. Here we provide a tutorial on how to run this R package.
